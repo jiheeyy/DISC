@@ -6,7 +6,7 @@ import shutil
 
 # We store the concept bank in two .zip files due to its large size
 # Set your ROOT here!
-ROOT = '/oak/stanford/groups/jamesz/shirwu/test' 
+ROOT = '/home/jiheeyou/DISC'
 
 concept_root = osp.join(ROOT, 'synthetic_concepts')
 os.makedirs(concept_root, exist_ok=True)
