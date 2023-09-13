@@ -1,5 +1,7 @@
 # IMPORT
 # cv2, matplotlib, pandas, numpy, random, shap, tensorflow
+import datetime
+
 import cv2
 import os
 import matplotlib.pyplot as plt
@@ -7,6 +9,7 @@ import pandas as pd
 import numpy as np
 import random
 import shap
+from datetime import datetime
 
 import tensorflow as tf
 from tensorflow.keras.applications import ResNet50
@@ -123,9 +126,12 @@ explainer = shap.Explainer(f, masker)  # "output_names=class_names"
 # here we use 500 evaluations of the underlying model to estimate the SHAP values
 img_num = 0
 shap_values = explainer(X[img_num:img_num+1], max_evals=500, batch_size=25, outputs=shap.Explanation.argsort.flip[:1])
-shap.image_plot(shap_values)
+shap.image_plot(shap_values, show=False)
+now = datetime.now()
+formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
+plt.savefig('results/stimulus_'+str(stimulus[img_num])+'_'+str(formatted_date)+'.png')
 
-print(f"IMAGE NUM: {img_num}")
+print(f"STIMULUS NUM: {stimulus[img_num]}")
 print(true_mean(stimulus[img_num]))
 print(model.predict(preprocess_image("test_set/"+str(stimulus[img_num])+".jpg")))
 print(shap_values.base_values)
