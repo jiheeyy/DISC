@@ -28,7 +28,7 @@ def true_mean(stim):
     stim = int(stim)
     return truemean["happy"][stim - 1]
 
-
+print('csv and packages done')
 ##################################################
 
 # Load the ResNet50 model with given input shape and without the top (fully-connected) layers
@@ -50,7 +50,7 @@ model = Model(inputs=base_model.input, outputs=predictions)
 # Load the weights for the last two layers from the HDF5 file
 model.load_weights('checkpoints/wrwf.hdf5', by_name=True)
 
-
+print('model weight load done')
 ##################################################
 def preprocess_image(image_path, target_size=(1024, 1024)):
     # Load the image
@@ -117,6 +117,8 @@ def create_X():
 
 X, stimulus = create_X()
 
+print('created X, stimulus done')
+
 # wrwf
 # define a masker that is used to mask out partitions of the input image, this one uses a blurred background
 masker = shap.maskers.Image("inpaint_telea", X[0].shape)
@@ -126,10 +128,13 @@ explainer = shap.Explainer(f, masker)  # "output_names=class_names"
 # here we use 500 evaluations of the underlying model to estimate the SHAP values
 img_num = 0
 shap_values = explainer(X[img_num:img_num+1], max_evals=500, batch_size=25, outputs=shap.Explanation.argsort.flip[:1])
+print('shap value calculation done')
 shap.image_plot(shap_values, show=False)
+print('shap plot done')
 now = datetime.now()
 formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
 plt.savefig('results/stimulus_'+str(stimulus[img_num])+'_'+str(formatted_date)+'.png')
+print('shap plot save done')
 
 print(f"STIMULUS NUM: {stimulus[img_num]}")
 print(true_mean(stimulus[img_num]))
