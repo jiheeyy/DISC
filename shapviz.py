@@ -1,6 +1,6 @@
 # TODO: INSTALL
 # IMPORT
-# cv2, matplotlib, pandas, numpy, random, shap, tensorflow
+# pip install opencv-python, matplotlib, pandas, numpy,p shap, tensorflow
 import cv2
 import os
 import matplotlib.pyplot as plt
