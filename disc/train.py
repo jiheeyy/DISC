@@ -32,14 +32,14 @@ def train(
         concept_data = {}
         print('Processing concept images in each class..')
         for c in tqdm(range(args.n_classes)):
-            concept_names, concept_probs = relevant_concepts[c]
+            concept_names, concept_probs = relevant_concepts[c] # get up to n-th most relevent concept
             concept_data[c] = ConceptDataset(
                 args, root_dir=args.concept_img_folder,
                 concept_names=concept_names, 
                 concept_probs=concept_probs,
                 model_type=args.model,
                 augment_data=args.augment_data
-                )
+                ) # relevant to disc.concept_utils.concept_dataset.py class
         print('Done!')
         all_concept_names = [item for _list in \
             [concept_data[c].concept_names for c in range(args.n_classes)] for item in _list]
