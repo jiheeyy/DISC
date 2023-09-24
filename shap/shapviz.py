@@ -131,9 +131,13 @@ shap_values = explainer(X[img_num:img_num+1], max_evals=500, batch_size=25, outp
 print('shap value calculation done')
 shap.image_plot(shap_values, show=False)
 print('shap plot done')
+if not os.path.exists('results'):
+    print('NO RESULTS! MAKING NEW FOLDER')
+    os.makedirs('results')
 now = datetime.now()
 formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
-plt.savefig('results/stimulus_'+str(stimulus[img_num])+'_'+str(formatted_date)+'.png')
+formatted_date = formatted_date.replace(':', '_').replace(' ', '_')
+plt.savefig('results/stimulus_' + str(stimulus[img_num]) + '_' + str(formatted_date) + '.png')
 print('shap plot save done')
 
 print(f"STIMULUS NUM: {stimulus[img_num]}")
